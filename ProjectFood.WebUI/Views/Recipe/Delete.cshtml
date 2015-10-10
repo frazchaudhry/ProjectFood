@@ -1,0 +1,128 @@
+﻿@model ProjectFood.Domain.Entities.Recipe
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Recipe</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Region.RegionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Region.RegionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecipeDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecipeDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Directions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Directions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVegetarian)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsVegetarian)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageMimeType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageMimeType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Likes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Likes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dislikes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dislikes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDatetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDatetime)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
