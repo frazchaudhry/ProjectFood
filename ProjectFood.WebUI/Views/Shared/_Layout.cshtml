@@ -29,6 +29,7 @@
                         <ul class="nav navbar-nav">
                             <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("Recipe List", "Index", "Recipe")</li>
+                            <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
                         </ul>
                         @using (Html.BeginForm("Index", "Recipe", FormMethod.Get, new { @class = "navbar-form navbar-right", roles = "search" }))
                         {

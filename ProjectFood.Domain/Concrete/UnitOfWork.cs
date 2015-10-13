@@ -19,6 +19,7 @@ namespace ProjectFood.Domain.Concrete
         {
             get
             {
+                recipeRepository = new GenericRepository<Recipe>(context);
                 return recipeRepository;
             }
         }

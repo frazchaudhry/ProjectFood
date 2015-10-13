@@ -22,13 +22,17 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe
-        public ActionResult Index(string searchString = null)
+        public ActionResult Index(string searchString = null, int categoryId = 0)
         {
             var recipes = unitOfWork.RecipeRepository.Get();
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 recipes = recipes.Where(r => r.RecipeName.ToUpper().Contains(searchString.ToUpper()));
+            }
+            else if (categoryId > 0)
+            {
+                recipes = recipes.Where(r => r.CategoryId == categoryId).ToList();
             }
 
             
@@ -63,10 +67,18 @@ namespace ProjectFood.WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RecipeId,RecipeName,RecipeDescription,Directions,IsVegetarian,RegionId,CategoryId,ImageData,ImageMimeType,UserId,Likes,Dislikes,CreateDateTime,UpdateDatetime")] Recipe recipe)
+        public ActionResult Create(Recipe recipe, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    recipe.ImageMimeType = image.ContentType;
+                    recipe.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(recipe.ImageData, 0, image.ContentLength);
+                }
+                recipe.CreateDateTime = DateTime.Now;
+                recipe.UpdateDatetime = DateTime.Now;
                 unitOfWork.RecipeRepository.Insert(recipe);
                 unitOfWork.Save();
                 return RedirectToAction("Index");
@@ -99,10 +111,17 @@ namespace ProjectFood.WebUI.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RecipeId,RecipeName,RecipeDescription,Directions,IsVegetarian,RegionId,CategoryId,ImageData,ImageMimeType,UserId,Likes,Dislikes,CreateDateTime,UpdateDatetime")] Recipe recipe)
+        public ActionResult Edit(Recipe recipe, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    recipe.ImageMimeType = image.ContentType;
+                    recipe.ImageData = new byte[image.ContentLength];
+                    image.InputStream.Read(recipe.ImageData, 0, image.ContentLength);
+                }
+                recipe.UpdateDatetime = DateTime.Now;
                 unitOfWork.RecipeRepository.Update(recipe);
                 unitOfWork.Save();
                 return RedirectToAction("Index");
