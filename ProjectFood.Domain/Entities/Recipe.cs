@@ -37,5 +37,6 @@ namespace ProjectFood.Domain.Entities
         public DateTime UpdateDatetime { get; set; }
         public virtual Region Region { get; set; }
         public virtual Category Category { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
