@@ -119,6 +119,7 @@
     <Compile Include="Entities\Recipe.cs" />
     <Compile Include="Entities\Region.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.Designer.cs">
       <DependentUpon>201510112231172_InitialCreate.cs</DependentUpon>
@@ -126,6 +127,10 @@
     <Compile Include="Migrations\201510260212580_AddCommentClass.cs" />
     <Compile Include="Migrations\201510260212580_AddCommentClass.Designer.cs">
       <DependentUpon>201510260212580_AddCommentClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201510270310495_ASPNET_Identity.cs" />
+    <Compile Include="Migrations\201510270310495_ASPNET_Identity.Designer.cs">
+      <DependentUpon>201510270310495_ASPNET_Identity.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510260212580_AddCommentClass.resx">
       <DependentUpon>201510260212580_AddCommentClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201510270310495_ASPNET_Identity.resx">
+      <DependentUpon>201510270310495_ASPNET_Identity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
