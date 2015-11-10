@@ -120,6 +120,8 @@
     <Compile Include="Entities\Region.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
+    <Compile Include="Infrastructure\CustomPasswordValidator.cs" />
+    <Compile Include="Infrastructure\CustomUserValidator.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.Designer.cs">
       <DependentUpon>201510112231172_InitialCreate.cs</DependentUpon>
