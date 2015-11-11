@@ -17,6 +17,7 @@ namespace ProjectFood.WebUI
         {
             app.CreatePerOwinContext<EfdbContext>(EfdbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
+            app.CreatePerOwinContext<AppRoleManager>(AppRoleManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

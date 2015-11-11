@@ -17,4 +17,12 @@ namespace ProjectFood.WebUI.Models
         [Required]
         public string Password { get; set; }
     }
+
+    public class UserLoginViewModel
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
 }

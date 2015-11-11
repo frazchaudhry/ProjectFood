@@ -118,7 +118,9 @@
     <Compile Include="Entities\Ingredient.cs" />
     <Compile Include="Entities\Recipe.cs" />
     <Compile Include="Entities\Region.cs" />
+    <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Infrastructure\AppRoleManager.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\CustomPasswordValidator.cs" />
     <Compile Include="Infrastructure\CustomUserValidator.cs" />
@@ -133,6 +135,10 @@
     <Compile Include="Migrations\201510270310495_ASPNET_Identity.cs" />
     <Compile Include="Migrations\201510270310495_ASPNET_Identity.Designer.cs">
       <DependentUpon>201510270310495_ASPNET_Identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511110432103_roles.cs" />
+    <Compile Include="Migrations\201511110432103_roles.Designer.cs">
+      <DependentUpon>201511110432103_roles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201510270310495_ASPNET_Identity.resx">
       <DependentUpon>201510270310495_ASPNET_Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511110432103_roles.resx">
+      <DependentUpon>201511110432103_roles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

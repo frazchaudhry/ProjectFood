@@ -12,6 +12,7 @@ using ProjectFood.WebUI.Models;
 
 namespace ProjectFood.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: Admin
