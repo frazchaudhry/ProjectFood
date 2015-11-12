@@ -140,6 +140,10 @@
     <Compile Include="Migrations\201511110432103_roles.Designer.cs">
       <DependentUpon>201511110432103_roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511120229232_UserProperties.cs" />
+    <Compile Include="Migrations\201511120229232_UserProperties.Designer.cs">
+      <DependentUpon>201511120229232_UserProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511110432103_roles.resx">
       <DependentUpon>201511110432103_roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511120229232_UserProperties.resx">
+      <DependentUpon>201511120229232_UserProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
