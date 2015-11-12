@@ -55,6 +55,13 @@ namespace ProjectFood.WebUI.Controllers
             return View(details);
         }
 
+        [Authorize]
+        public ActionResult Logout()
+        {
+            AuthManager.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+
         private IAuthenticationManager AuthManager
         {
             get

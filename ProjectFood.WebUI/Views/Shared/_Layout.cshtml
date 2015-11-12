@@ -36,7 +36,8 @@
                             <div class="form-group">
                                 @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Search" })
                             </div>
-                            <input type="submit" value="Search" class="btn btn-default" />
+                            <input type="submit" value="Search" class="btn btn-default"/>
+                            @Html.ActionLink("Sign Out", "Logout", "Account", null, new { @class = "btn btn-primary" })
                         }
                     </div>
                 </div>
