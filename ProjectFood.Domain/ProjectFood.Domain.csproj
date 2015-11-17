@@ -145,6 +145,14 @@
     <Compile Include="Migrations\201511120229232_UserProperties.Designer.cs">
       <DependentUpon>201511120229232_UserProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511150253303_Ingredient_Recipe_Relate.cs" />
+    <Compile Include="Migrations\201511150253303_Ingredient_Recipe_Relate.Designer.cs">
+      <DependentUpon>201511150253303_Ingredient_Recipe_Relate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.cs" />
+    <Compile Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.Designer.cs">
+      <DependentUpon>201511150300491_Ingredient_Recipe_Many_Relate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -167,6 +175,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511120229232_UserProperties.resx">
       <DependentUpon>201511120229232_UserProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511150253303_Ingredient_Recipe_Relate.resx">
+      <DependentUpon>201511150253303_Ingredient_Recipe_Relate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.resx">
+      <DependentUpon>201511150300491_Ingredient_Recipe_Many_Relate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

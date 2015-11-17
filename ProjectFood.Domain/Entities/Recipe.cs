@@ -12,7 +12,7 @@ namespace ProjectFood.Domain.Entities
         public string RecipeName { get; set; }
         [DataType(DataType.MultilineText)]
         public string RecipeDescription { get; set; }
-        public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual ICollection<Ingredient> Ingredients { get; set; }
         [DataType(DataType.MultilineText)]
         public string Directions { get; set; }
         public bool IsVegetarian { get; set; }
