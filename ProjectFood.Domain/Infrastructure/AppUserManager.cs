@@ -7,16 +7,16 @@ using ProjectFood.Domain.Entities;
 
 namespace ProjectFood.Domain.Infrastructure
 {
-    public class AppUserManager : UserManager<User>
+    public class AppUserManager : UserManager<User, int>
     {
-        public AppUserManager(IUserStore<User> store) : base(store)
+        public AppUserManager(IUserStore<User, int> store) : base(store)
         {   
         }
 
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
         {
             EfdbContext db = context.Get<EfdbContext>();
-            AppUserManager manager = new AppUserManager(new UserStore<User>(db));
+            AppUserManager manager = new AppUserManager(new RecipeUserStore(db));
 
             manager.PasswordValidator = new CustomPasswordValidator
             {
@@ -27,7 +27,7 @@ namespace ProjectFood.Domain.Infrastructure
                 RequireUppercase = true
             };
 
-            manager.UserValidator = new UserValidator<User>(manager)
+            manager.UserValidator = new UserValidator<User, int>(manager)
             {
                 AllowOnlyAlphanumericUserNames = true,
                 RequireUniqueEmail = true

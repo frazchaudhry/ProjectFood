@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -10,14 +11,14 @@ using ProjectFood.Domain.Entities;
 
 namespace ProjectFood.Domain.Concrete
 {
-    public class EfdbContext : IdentityDbContext<User>
+    public class EfdbContext : IdentityDbContext<User, Role, int, UserLogin, UserRole, UserClaim>
     {
         public EfdbContext() : base("EfdbContext")
         {
         }
 
         public DbSet<Recipe> Recipes { get; set; }
-        public DbSet<Ingredient> Ingredients { get; set; }
+
         public DbSet<Region> Regions { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Comment> Comments { get; set; }
@@ -38,11 +39,11 @@ namespace ProjectFood.Domain.Concrete
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("User").Property(p => p.Id).HasColumnName("UserId");
-            modelBuilder.Entity<IdentityRole>().ToTable("Role").Property(p => p.Id).HasColumnName("RoleId");
-            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRole");
-            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogin");
-            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaim");
+            modelBuilder.Entity<User>().ToTable("User").Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity).HasColumnName("UserId");
+            modelBuilder.Entity<Role>().ToTable("Role").Property(p => p.Id).HasColumnName("RoleId").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<UserRole>().ToTable("UserRole");
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaim");
         }
     }
 }

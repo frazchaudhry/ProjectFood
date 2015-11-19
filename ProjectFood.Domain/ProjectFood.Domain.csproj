@@ -116,15 +116,18 @@
     <Compile Include="Entities\Comment.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entities\Ingredient.cs" />
     <Compile Include="Entities\Recipe.cs" />
     <Compile Include="Entities\Region.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserClaim.cs" />
+    <Compile Include="Entities\UserLogin.cs" />
+    <Compile Include="Entities\UserRole.cs" />
     <Compile Include="Infrastructure\AppRoleManager.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="Infrastructure\CustomPasswordValidator.cs" />
     <Compile Include="Infrastructure\CustomUserValidator.cs" />
+    <Compile Include="Infrastructure\IdentityStores.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.cs" />
     <Compile Include="Migrations\201510112231172_InitialCreate.Designer.cs">
       <DependentUpon>201510112231172_InitialCreate.cs</DependentUpon>
@@ -152,6 +155,26 @@
     <Compile Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.cs" />
     <Compile Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.Designer.cs">
       <DependentUpon>201511150300491_Ingredient_Recipe_Many_Relate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511190312227_RemoveIngredients.cs" />
+    <Compile Include="Migrations\201511190312227_RemoveIngredients.Designer.cs">
+      <DependentUpon>201511190312227_RemoveIngredients.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511190502434_UpdateIdentityPrimaryKeys.cs" />
+    <Compile Include="Migrations\201511190502434_UpdateIdentityPrimaryKeys.Designer.cs">
+      <DependentUpon>201511190502434_UpdateIdentityPrimaryKeys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511190505121_RecipeUserRelate.cs" />
+    <Compile Include="Migrations\201511190505121_RecipeUserRelate.Designer.cs">
+      <DependentUpon>201511190505121_RecipeUserRelate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511190740419_shithappened.cs" />
+    <Compile Include="Migrations\201511190740419_shithappened.Designer.cs">
+      <DependentUpon>201511190740419_shithappened.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511190743075_mightrecover.cs" />
+    <Compile Include="Migrations\201511190743075_mightrecover.Designer.cs">
+      <DependentUpon>201511190743075_mightrecover.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +204,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511150300491_Ingredient_Recipe_Many_Relate.resx">
       <DependentUpon>201511150300491_Ingredient_Recipe_Many_Relate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511190312227_RemoveIngredients.resx">
+      <DependentUpon>201511190312227_RemoveIngredients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511190502434_UpdateIdentityPrimaryKeys.resx">
+      <DependentUpon>201511190502434_UpdateIdentityPrimaryKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511190505121_RecipeUserRelate.resx">
+      <DependentUpon>201511190505121_RecipeUserRelate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511190740419_shithappened.resx">
+      <DependentUpon>201511190740419_shithappened.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511190743075_mightrecover.resx">
+      <DependentUpon>201511190743075_mightrecover.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

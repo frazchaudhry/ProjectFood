@@ -9,12 +9,17 @@ namespace ProjectFood.Domain.Entities
     {
         [HiddenInput(DisplayValue = false)]
         public int RecipeId { get; set; }
+
         public string RecipeName { get; set; }
         [DataType(DataType.MultilineText)]
         public string RecipeDescription { get; set; }
-        public virtual ICollection<Ingredient> Ingredients { get; set; }
+
         [DataType(DataType.MultilineText)]
         public string Directions { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Ingredients { get; set; }
+
         public bool IsVegetarian { get; set; }
         public int RegionId { get; set; }
         public int CategoryId { get; set; }
@@ -33,5 +38,6 @@ namespace ProjectFood.Domain.Entities
         public virtual Region Region { get; set; }
         public virtual Category Category { get; set; }
         public List<Comment> Comments { get; set; }
+        public virtual User User { get; set; }
     }
 }

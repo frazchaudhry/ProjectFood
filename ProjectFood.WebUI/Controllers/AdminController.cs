@@ -12,7 +12,7 @@ using ProjectFood.WebUI.Models;
 
 namespace ProjectFood.WebUI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         // GET: Admin
@@ -51,7 +51,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             User user = await UserManager.FindByIdAsync(id);
             if (user != null)
@@ -72,7 +72,7 @@ namespace ProjectFood.WebUI.Controllers
             }
         }
 
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(int id)
         {
             User user = await UserManager.FindByIdAsync(id);
 
@@ -87,7 +87,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(string id, string email, string password)
+        public async Task<ActionResult> Edit(int id, string email, string password)
         {
             User user = await UserManager.FindByIdAsync(id);
 

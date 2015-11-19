@@ -54,6 +54,7 @@ namespace ProjectFood.WebUI.Controllers
             return View(recipe);
         }
 
+        //[Authorize]
         // GET: Recipe/Create
         public ActionResult Create()
         {
@@ -65,6 +66,7 @@ namespace ProjectFood.WebUI.Controllers
         // POST: Recipe/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Recipe recipe, HttpPostedFileBase image = null)
@@ -90,6 +92,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe/Edit/5
+        //[Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -109,6 +112,7 @@ namespace ProjectFood.WebUI.Controllers
         // POST: Recipe/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Recipe recipe, HttpPostedFileBase image)

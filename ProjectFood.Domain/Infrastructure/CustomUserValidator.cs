@@ -8,7 +8,7 @@ using ProjectFood.Domain.Entities;
 
 namespace ProjectFood.Domain.Infrastructure
 {
-    class CustomUserValidator : UserValidator<User>
+    class CustomUserValidator : UserValidator<User, int>
     {
         public CustomUserValidator(AppUserManager mgr) : base(mgr) { }
 

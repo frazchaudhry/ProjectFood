@@ -8,9 +8,9 @@ using ProjectFood.Domain.Entities;
 
 namespace ProjectFood.Domain.Infrastructure
 {
-    public class AppRoleManager : RoleManager<Role>, IDisposable
+    public class AppRoleManager : RoleManager<Role, int>, IDisposable
     {
-        public AppRoleManager(RoleStore<Role> store)
+        public AppRoleManager(IRoleStore<Role, int> store)
             : base(store)
         {
         }
@@ -18,7 +18,7 @@ namespace ProjectFood.Domain.Infrastructure
         public static AppRoleManager Create(IdentityFactoryOptions<AppRoleManager> options,IOwinContext context)
         {
             return new AppRoleManager(new
-            RoleStore<Role>(context.Get<EfdbContext>()));
+            RecipeRoleStore(context.Get<EfdbContext>()));
         }
     }
 }

@@ -7,13 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ProjectFood.Domain.Entities
 {
-    public class Role : IdentityRole<int, UserRole>
+    public class UserLogin : IdentityUserLogin<int>
     {
-        public Role() : base() {}
-
-        public Role(string name)
-        {
-            Name = name;
-        }
     }
 }

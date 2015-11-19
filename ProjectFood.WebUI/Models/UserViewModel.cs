@@ -38,7 +38,7 @@ namespace ProjectFood.WebUI.Models
     public class RoleModificationModel
     {
         public string RoleName { get; set; }
-        public string[] IdsToAdd { get; set; }
-        public string[] IdsToDelete { get; set; }
+        public int[] IdsToAdd { get; set; }
+        public int[] IdsToDelete { get; set; }
     }
 }

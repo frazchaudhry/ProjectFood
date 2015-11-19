@@ -46,7 +46,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(int id)
         {
             Role role = await RoleManager.FindByIdAsync(id);
             if (role != null)
@@ -67,10 +67,10 @@ namespace ProjectFood.WebUI.Controllers
             }
         }
 
-        public async Task<ActionResult> Edit(string id)
+        public async Task<ActionResult> Edit(int id)
         {
             Role role = await RoleManager.FindByIdAsync(id);
-            string[] memberIds = role.Users.Select(x => x.UserId).ToArray();
+            int[] memberIds = role.Users.Select(x => x.UserId).ToArray();
             IEnumerable<User> members = UserManager.Users.Where(x => memberIds.Any(y => y == x.Id));
             IEnumerable<User> nonMembers = UserManager.Users.Except(members);
 
@@ -88,7 +88,7 @@ namespace ProjectFood.WebUI.Controllers
             IdentityResult result;
             if (ModelState.IsValid)
             {
-                foreach (var userId in model.IdsToAdd ?? new string[] {})
+                foreach (var userId in model.IdsToAdd ?? new int    [] {})
                 {
                     result = await UserManager.AddToRoleAsync(userId, model.RoleName);
                     if (!result.Succeeded)
@@ -96,7 +96,7 @@ namespace ProjectFood.WebUI.Controllers
                         return View("Error", result.Errors);
                     }
                 }
-                foreach (var userId in model.IdsToDelete ?? new string[] {})
+                foreach (var userId in model.IdsToDelete ?? new int[] {})
                 {
                     result = await UserManager.RemoveFromRoleAsync(userId, model.RoleName);
                     if (!result.Succeeded)

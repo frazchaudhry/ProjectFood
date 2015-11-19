@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using ProjectFood.Domain.Entities;
+using ProjectFood.Domain.Infrastructure;
 
 namespace ProjectFood.Domain.Concrete
 {
@@ -14,6 +17,29 @@ namespace ProjectFood.Domain.Concrete
     {
         //protected override void Seed(EfdbContext context)
         //{
+        //    //AppUserManager userMgr = new AppUserManager(new RecipeUserStore(context));
+        //    ////AppRoleManager roleMgr = new AppRoleManager(new RecipeRoleStore(context));
+
+        //    //var userName = "Administrator";
+        //    //var roleName = "Administrators";
+        //    //var password = "Lfckfb2011@";
+        //    //var email = "fraz501@hotmail.com";
+        //    ////if (!roleMgr.RoleExists(roleName))
+        //    ////{
+        //    ////    roleMgr.Create(new Role(roleName));
+        //    ////}
+
+        //    //User user = userMgr.FindByName(userName);
+        //    //if (user == null)
+        //    //{
+        //    //    userMgr.Create(new User { UserName = userName, Email = email },
+        //    //    password);
+        //    //    user = userMgr.FindByName(userName);
+        //    //}
+        //    ////if (!userMgr.IsInRole(user.Id, roleName))
+        //    ////{
+        //    ////    userMgr.AddToRole(user.Id, roleName);
+        //    ////}
 
         //    var regions = new List<Region>
         //    {
@@ -46,7 +72,8 @@ namespace ProjectFood.Domain.Concrete
         //            RegionId = 2,
         //            CategoryId = 2,
         //            ImageData = File.ReadAllBytes(@"E:\Visual Studio 2013\Projects\ProjectFood\ProjectFood.WebUI\App_Data\Images\kungpao.jpg"),
-        //            ImageMimeType = "image/jpeg"
+        //            ImageMimeType = "image/jpeg",
+        //            //UserId = user.Id
         //        },
         //        new Recipe
         //        {
@@ -59,7 +86,8 @@ namespace ProjectFood.Domain.Concrete
         //            RegionId = 2,
         //            CategoryId = 1,
         //            ImageData = File.ReadAllBytes(@"E:\Visual Studio 2013\Projects\ProjectFood\ProjectFood.WebUI\App_Data\Images\tomato-basil-salmon.jpg"),
-        //            ImageMimeType = "image/jpeg"
+        //            ImageMimeType = "image/jpeg",
+        //            //UserId = user.Id
         //        },
         //        new Recipe
         //        {
@@ -72,7 +100,8 @@ namespace ProjectFood.Domain.Concrete
         //            RegionId = 1,
         //            CategoryId = 2,
         //            ImageData = File.ReadAllBytes(@"E:\Visual Studio 2013\Projects\ProjectFood\ProjectFood.WebUI\App_Data\Images\vegetarian-korma.jpg"),
-        //            ImageMimeType = "image/jpeg"
+        //            ImageMimeType = "image/jpeg",
+        //            //UserId = user.Id
         //        },
         //        new Recipe
         //        {
@@ -84,7 +113,8 @@ namespace ProjectFood.Domain.Concrete
         //            RegionId = 2,
         //            CategoryId = 1,
         //            ImageData = File.ReadAllBytes(@"E:\Visual Studio 2013\Projects\ProjectFood\ProjectFood.WebUI\App_Data\Images\blueberry-flax-pancakes.jpg"),
-        //            ImageMimeType = "image/jpeg"
+        //            ImageMimeType = "image/jpeg",
+        //            //UserId = user.Id
         //        }
         //    };
         //    recipes.ForEach(r => context.Recipes.Add(r));
