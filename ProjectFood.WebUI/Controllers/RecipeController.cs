@@ -4,11 +4,13 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using ProjectFood.Domain.Abstract;
 using ProjectFood.Domain.Concrete;
 using ProjectFood.Domain.Entities;
+using ProjectFood.WebUI.Infrastructure;
 
 namespace ProjectFood.WebUI.Controllers
 {
@@ -54,7 +56,7 @@ namespace ProjectFood.WebUI.Controllers
             return View(recipe);
         }
 
-        //[Authorize]
+        [Authorize]
         // GET: Recipe/Create
         public ActionResult Create()
         {
@@ -66,10 +68,10 @@ namespace ProjectFood.WebUI.Controllers
         // POST: Recipe/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Recipe recipe, HttpPostedFileBase image = null)
+        public async Task<ActionResult> Create(Recipe recipe, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
@@ -81,6 +83,10 @@ namespace ProjectFood.WebUI.Controllers
                 }
                 recipe.CreateDateTime = DateTime.Now;
                 recipe.UpdateDatetime = DateTime.Now;
+
+                var user = await IdentityHelpers.UserManager.FindByNameAsync(User.Identity.Name);
+                recipe.UserId = user.Id;
+
                 unitOfWork.RecipeRepository.Insert(recipe);
                 unitOfWork.Save();
                 return RedirectToAction("Index");
@@ -92,7 +98,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe/Edit/5
-        //[Authorize]
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)

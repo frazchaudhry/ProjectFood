@@ -31,5 +31,10 @@ namespace ProjectFood.WebUI.Infrastructure
             }
             return new MvcHtmlString(string.Format("{0}", claimType.Split('/', '.').Last()));
         }
+
+        public static AppUserManager UserManager
+        {
+            get { return HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>(); }
+        }
     }
 }

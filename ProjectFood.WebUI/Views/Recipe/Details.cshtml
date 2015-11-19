@@ -1,7 +1,11 @@
-﻿@model ProjectFood.Domain.Entities.Recipe
+﻿@using ProjectFood.WebUI.Infrastructure
+@model ProjectFood.Domain.Entities.Recipe
 
 @{
     ViewBag.Title = "Details";
+    var ingredientCount = RecipeHelper.GetIngredientList(Model.Ingredients).Count;
+    var ingredients = RecipeHelper.GetIngredientList(Model.Ingredients);
+    var column = 1;
 }
 
 <h2>Details</h2>
@@ -39,7 +43,18 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Ingredients)
+            <table class="table table-striped">
+                @for (int i = 0; i < ingredientCount; i++)
+                {
+                    <tr>
+                        <td>@ingredients[i++]</td>
+                        @if (i < ingredientCount)
+                        {
+                            <td>@ingredients[i]</td>
+                        }
+                    </tr>
+                }
+            </table>
         </dd>
 
         <dt>
