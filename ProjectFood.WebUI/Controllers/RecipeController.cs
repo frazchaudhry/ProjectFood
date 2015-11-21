@@ -24,7 +24,8 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe
-        public ActionResult Index(string searchString = null, int categoryId = 0, int regionId = 0)
+        public ViewResult Index(string searchString = null, int categoryId = 0,
+            int regionId = 0, bool isVegetarian = false, string ingredients = null)
         {
             var recipes = unitOfWork.RecipeRepository.Get();
 
@@ -32,16 +33,25 @@ namespace ProjectFood.WebUI.Controllers
             {
                 recipes = recipes.Where(r => r.RecipeName.ToUpper().Contains(searchString.ToUpper()));
             }
-            else if (categoryId > 0)
+            if (categoryId > 0)
             {
                 recipes = recipes.Where(r => r.CategoryId == categoryId).ToList();
             }
-            else if (regionId > 0)
+            if (regionId > 0)
             {
                 recipes = recipes.Where(r => r.RegionId == regionId).ToList();
             }
+            if (isVegetarian)
+            {
+                recipes = recipes.Where(r => r.IsVegetarian);
+            }
+            if (!String.IsNullOrEmpty(ingredients))
+            {
+                var ingredientList = ingredients.Split(new [] {","} , StringSplitOptions.None);
+                recipes = ingredientList.Aggregate(recipes, (current, ingredient) => current.Where(r => !String.IsNullOrEmpty(r.Ingredients) && r.Ingredients.Contains(ingredient)));
+            }
 
-            
+
             return View(recipes.ToList());
         }
 
