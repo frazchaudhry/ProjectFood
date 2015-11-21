@@ -1,93 +1,80 @@
-﻿@model IEnumerable<ProjectFood.Domain.Entities.Recipe>
+﻿@model List<ProjectFood.Domain.Entities.Recipe>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Recipe List";
 }
-
-<h2>Index</h2>
+<link href="~/Content/css/Recipe/Index.css" rel="stylesheet" />
+<h2>Recipe List</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Region.RegionName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecipeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecipeDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Directions)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsVegetarian)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Likes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Dislikes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdateDatetime)
-        </th>
-        <th></th>
-    </tr>
+<hr/>
+@for (int i = 0; i < Model.Count; i++)
+{
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="thumbnail">
+                <img src=@Url.Action("GetImage", "Recipe", new {recipeId = Model[i].RecipeId}) style="width: 100%">
+                <div class="caption">
+                    <h3>@Model[i].RecipeName</h3>
+                    <p>
+                        <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
+                        <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                        <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                    </p>
+                </div>
+            </div>
+        </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Region.RegionName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecipeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecipeDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Directions)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsVegetarian)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Likes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Dislikes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateDatetime)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RecipeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RecipeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RecipeId })
-        </td>
-    </tr>
+        @if (i < Model.Count)
+        {
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src=@Url.Action("GetImage", "Recipe", new {recipeId = Model[i].RecipeId}) style="width: 100%">
+                    <div class="caption">
+                        <h3>@Model[i].RecipeName</h3>
+                        <p>
+                            <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
+                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (i < Model.Count)
+        {
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src=@Url.Action("GetImage", "Recipe", new {recipeId = Model[i].RecipeId}) style="width: 100%">
+                    <div class="caption">
+                        <h3>@Model[i].RecipeName</h3>
+                        <p>
+                            <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
+                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (i < Model.Count)
+        {
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <img src=@Url.Action("GetImage", "Recipe", new {recipeId = Model[i].RecipeId}) style="width: 100%">
+                    <div class="caption">
+                        <h3>@Model[i].RecipeName</h3>
+                        <p>
+                            <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
+                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
-
-</table>

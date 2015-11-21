@@ -24,7 +24,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe
-        public ActionResult Index(string searchString = null, int categoryId = 0)
+        public ActionResult Index(string searchString = null, int categoryId = 0, int regionId = 0)
         {
             var recipes = unitOfWork.RecipeRepository.Get();
 
@@ -35,6 +35,10 @@ namespace ProjectFood.WebUI.Controllers
             else if (categoryId > 0)
             {
                 recipes = recipes.Where(r => r.CategoryId == categoryId).ToList();
+            }
+            else if (regionId > 0)
+            {
+                recipes = recipes.Where(r => r.RegionId == regionId).ToList();
             }
 
             
@@ -69,7 +73,7 @@ namespace ProjectFood.WebUI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Recipe recipe, HttpPostedFileBase image = null)
         {
@@ -119,7 +123,7 @@ namespace ProjectFood.WebUI.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[Authorize]
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Recipe recipe, HttpPostedFileBase image)
         {

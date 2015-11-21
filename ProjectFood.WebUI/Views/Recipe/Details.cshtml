@@ -14,10 +14,10 @@
     <h4>@Model.RecipeName</h4>
     <hr/>
     <div class="row">
-        <div class="col-md-3">
-            <img src="@Url.Action("GetImage", "Recipe", new {recipeId = Model.RecipeId})"/>
+        <div class="col-md-4">
+            <img src="@Url.Action("GetImage", "Recipe", new {recipeId = Model.RecipeId})" style="width: 100%"/>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             @Html.DisplayFor(m => m.RecipeDescription)
         </div>
     </div>
@@ -62,7 +62,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(m => m.Directions)
+            @Html.Raw(Model.Directions)
         </dd>
 
         @*<dt>
