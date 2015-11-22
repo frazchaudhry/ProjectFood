@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using ProjectFood.Domain.Entities;
 using ProjectFood.Domain.Infrastructure;
 using ProjectFood.WebUI.Models;
+using ProjectFood.WebUI.Infrastructure;
 
 namespace ProjectFood.WebUI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: Admin
@@ -21,14 +22,22 @@ namespace ProjectFood.WebUI.Controllers
             return View(UserManager.Users);
         }
 
-        public ActionResult Create()
+        [AllowAnonymous]
+        public ActionResult Create(string returnUrl)
         {
+            ViewBag.returnUrl = returnUrl;
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> Create(UserViewModel model)
+        public async Task<ActionResult> Create(UserViewModel model, string returnUrl)
         {
+            if (model.Password != model.ConfirmPassword)
+            {
+                ModelState.AddModelError("'Confirm Password' and 'Password' do not match!", new Exception("Confirm Password Mismatch"));
+            }
+
             if (ModelState.IsValid)
             {
                 User user = new User
@@ -36,15 +45,31 @@ namespace ProjectFood.WebUI.Controllers
                     UserName = model.Name,
                     Email = model.Email,
                 };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                IdentityResult userResult = await UserManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
+                if (userResult.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    user = await UserManager.FindByNameAsync(model.Name);
+                    if (user != null)
+                    {
+                        IdentityResult roleResult = await UserManager.AddToRoleAsync(user.Id, "Users");
+                        if (roleResult.Succeeded)
+                        {
+                            ClaimsIdentity ident = await UserManager.CreateIdentityAsync(user,
+                                DefaultAuthenticationTypes.ApplicationCookie);
+                            IdentityHelpers.AuthManager.SignOut();
+                            IdentityHelpers.AuthManager.SignIn(new AuthenticationProperties
+                            {
+                                IsPersistent = false
+                            }, ident);
+                            return Redirect(returnUrl);
+                        }
+                    }
+                    ModelState.AddModelError("", "There was an error in processing your request. Please try again later!");
                 }
                 else
                 {
-                    AddErrorsFromResult(result);
+                    AddErrorsFromResult(userResult);
                 }
             }
             return View(model);

@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using ProjectFood.Domain.Infrastructure;
 
 namespace ProjectFood.WebUI.Infrastructure
@@ -35,6 +36,14 @@ namespace ProjectFood.WebUI.Infrastructure
         public static AppUserManager UserManager
         {
             get { return HttpContext.Current.GetOwinContext().GetUserManager<AppUserManager>(); }
+        }
+
+        public static IAuthenticationManager AuthManager
+        {
+            get
+            {
+                return HttpContext.Current.GetOwinContext().Authentication;
+            }
         }
     }
 }

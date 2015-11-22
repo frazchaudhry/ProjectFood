@@ -7,6 +7,8 @@ namespace ProjectFood.Domain.Entities
 {
     public class User : IdentityUser<int, UserLogin, UserRole, UserClaim>
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string AboutMe { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }

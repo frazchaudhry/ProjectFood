@@ -176,6 +176,10 @@
     <Compile Include="Migrations\201511190743075_mightrecover.Designer.cs">
       <DependentUpon>201511190743075_mightrecover.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511220300513_nameFieldstoUserTable.cs" />
+    <Compile Include="Migrations\201511220300513_nameFieldstoUserTable.Designer.cs">
+      <DependentUpon>201511220300513_nameFieldstoUserTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -219,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511190743075_mightrecover.resx">
       <DependentUpon>201511190743075_mightrecover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511220300513_nameFieldstoUserTable.resx">
+      <DependentUpon>201511220300513_nameFieldstoUserTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

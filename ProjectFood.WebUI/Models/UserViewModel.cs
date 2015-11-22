@@ -18,6 +18,11 @@ namespace ProjectFood.WebUI.Models
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        [Compare("Password")]
+        [Display(Name = "Confirm Password")]
+        public string ConfirmPassword { get; set; }
     }
 
     public class UserLoginViewModel
@@ -40,5 +45,10 @@ namespace ProjectFood.WebUI.Models
         public string RoleName { get; set; }
         public int[] IdsToAdd { get; set; }
         public int[] IdsToDelete { get; set; }
+    }
+
+    public class UserProfileViewModel
+    {
+        
     }
 }

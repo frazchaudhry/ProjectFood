@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -18,6 +14,12 @@ namespace ProjectFood.WebUI.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        public async Task<ActionResult> UserProfile()
+        {
+            return View();
+        }
+
+
         // GET: Account
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
