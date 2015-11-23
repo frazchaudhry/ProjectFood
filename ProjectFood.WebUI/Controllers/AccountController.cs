@@ -53,11 +53,39 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditProfile(int userId)
+        public async Task<ActionResult> EditProfile(UserProfileViewModel userViewModel, HttpPostedFileBase image = null)
         {
-            throw new NotImplementedException();
-            var viewModel = new UserProfileViewModel();
-            return View("UserProfile", viewModel);
+            if (ModelState.IsValid)
+            {
+                User user = await UserManager.FindByIdAsync(userViewModel.Id);
+
+                if (user != null)
+                {
+                    user.Id = userViewModel.Id;
+                    user.UserName = userViewModel.UserName;
+                    user.Email = userViewModel.Email;
+                    user.PasswordHash = userViewModel.PasswordHash;
+                    user.FirstName = userViewModel.FirstName;
+                    user.LastName = userViewModel.LastName;
+                    user.AboutMe = userViewModel.AboutMe;
+                    user.Address1 = userViewModel.Address1;
+                    user.Address2 = userViewModel.Address2;
+                    user.City = userViewModel.City;
+                    user.State = userViewModel.State;
+                    user.Country = userViewModel.Country;
+                    user.ZipCode = userViewModel.ZipCode;
+                    user.ImageData = userViewModel.ImageData;
+                    user.ImageMimeType = userViewModel.ImageMimeType;
+
+                    if (image != null)
+                    {
+                        user.ImageMimeType = image.ContentType;
+                        user.ImageData = new byte[image.ContentLength];
+                        image.InputStream.Read(user.ImageData, 0, image.ContentLength);
+                    }
+                }
+            }
+            return View("UserProfile", userViewModel);
         }
 
 

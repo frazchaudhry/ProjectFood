@@ -18,6 +18,8 @@ namespace ProjectFood.WebUI.Models
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        public string PasswordHash { get; set; }
         public string Email { get; set; }
 
         [Display(Name = "About Me")]
