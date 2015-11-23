@@ -1,4 +1,5 @@
 ﻿@using System.Data.Entity.ModelConfiguration.Conventions
+@using Microsoft.AspNet.Identity
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/carousel.css" rel="stylesheet" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 </head>
 <body>
     <div class="navbar-wrapper">
@@ -43,7 +45,9 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li>@Html.ActionLink("Profile", "UserProfile", "Account")</li>
+                                        <li>@Html.ActionLink("Profile", "UserProfile", "Account", new {userId = User.Identity.GetUserId(), activeSection = "Profile"}, null)</li>
+                                        <li>@Html.ActionLink("Edit Profile", "UserProfile", "Account", new {userId = User.Identity.GetUserId(), activeSection = "EditProfile"}, null)</li>
+                                        <li>@Html.ActionLink("Manage Recipes", "UserProfile", "Account", new { userId = User.Identity.GetUserId(), activeSection = "Recipes" }, null)</li>
                                     </ul>
                                 </li>
                             }
@@ -52,7 +56,8 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                        <li>@Html.ActionLink("Manager Roles", "Index", "RoleAdmin")</li>
+                                        <li>@Html.ActionLink("Manage Users", "Index", "Admin")</li>
+                                        <li>@Html.ActionLink("Manage Roles", "Index", "RoleAdmin")</li>
                                     </ul>
                                 </li>
                             }
@@ -113,7 +118,6 @@
         </div>
     </div>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script>
     $(function() {

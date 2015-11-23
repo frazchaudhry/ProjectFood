@@ -46,9 +46,4 @@ namespace ProjectFood.WebUI.Models
         public int[] IdsToAdd { get; set; }
         public int[] IdsToDelete { get; set; }
     }
-
-    public class UserProfileViewModel
-    {
-        
-    }
 }

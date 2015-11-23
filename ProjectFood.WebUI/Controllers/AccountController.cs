@@ -1,10 +1,14 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using ProjectFood.Domain.Concrete;
 using ProjectFood.Domain.Entities;
 using ProjectFood.Domain.Infrastructure;
 using ProjectFood.WebUI.Models;
@@ -14,9 +18,46 @@ namespace ProjectFood.WebUI.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        public async Task<ActionResult> UserProfile()
+        public async Task<ActionResult> UserProfile(int userId, string activeSection)
         {
-            return View();
+            User user = await UserManager.FindByIdAsync(userId);
+            if (userId > 0 && user != null)
+            {
+                var viewModel = new UserProfileViewModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    AboutMe = user.AboutMe,
+                    Email = user.Email,
+                    Address1 = user.Address1,
+                    Address2 = user.Address2,
+                    City = user.City,
+                    State = user.State,
+                    Country = user.Country,
+                    ZipCode = user.ZipCode,
+                    ImageData = user.ImageData,
+                    ImageMimeType = user.ImageMimeType
+                };
+                using (var db = new EfdbContext())
+                {
+                    viewModel.Recipes = new List<Recipe>();
+                    viewModel.Recipes = db.Recipes.Where(r => r.UserId == userId).ToList();
+                }
+                ViewBag.ActiveSection = activeSection;
+                return View(viewModel);
+            }
+            
+            return View("Error", new[] {"No user was found!"});
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> EditProfile(int userId)
+        {
+            throw new NotImplementedException();
+            var viewModel = new UserProfileViewModel();
+            return View("UserProfile", viewModel);
         }
 
 
@@ -111,6 +152,16 @@ namespace ProjectFood.WebUI.Controllers
                 IsPersistent = false
             }, ident);
             return Redirect(returnUrl ?? "/");
+        }
+
+        public async Task<FileContentResult> GetImage(int userId)
+        {
+            User user = await UserManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                return File(user.ImageData, user.ImageMimeType);
+            }
+            return null;
         }
 
         private IAuthenticationManager AuthManager

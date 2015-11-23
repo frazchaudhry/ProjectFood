@@ -148,6 +148,7 @@
     <Content Include="App_Data\Images\halwa-poori.jpg" />
     <Content Include="App_Data\Images\kungpao.jpg" />
     <Content Include="App_Data\Images\lab e shireen_0.jpg" />
+    <Content Include="App_Data\Images\MadMagazineAndGamePicture.gif" />
     <Content Include="App_Data\Images\paya curry_0.jpg" />
     <Content Include="App_Data\Images\rasmalai.jpg" />
     <Content Include="App_Data\Images\shish-tawook.jpg" />
@@ -204,6 +205,7 @@
     <Compile Include="Infrastructure\IdentityHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\RecipeHelper.cs" />
+    <Compile Include="Models\UserProfileViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,6 +235,7 @@
     <Content Include="Views\RoleAdmin\Create.cshtml" />
     <Content Include="Views\RoleAdmin\Edit.cshtml" />
     <Content Include="Views\Claims\Index.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

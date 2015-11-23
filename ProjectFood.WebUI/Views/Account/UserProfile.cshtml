@@ -1,0 +1,301 @@
+﻿@using Microsoft.AspNet.Identity
+@model ProjectFood.WebUI.Models.UserProfileViewModel
+
+@{
+    ViewBag.Title = Model.UserName;
+    var selection = ViewBag.ActiveSection;
+}
+
+<h2>@(Model.FirstName + " " + Model.LastName)</h2>
+<input type="hidden" id="activeSection" value=@selection />
+<hr/>
+
+<div class="row">
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation" class="@(selection == "Profile" ? "active" : "")" id="nav-profile"><a href="#">Profile</a></li>
+            @if (Model.Id == Int32.Parse(User.Identity.GetUserId()))
+            {
+                <li role="presentation" class="@(selection == "EditProfile" ? "active" : "")" id="nav-edit-profile"><a href="#">Edit Profile</a></li>
+            }
+            <li role="presentation" class="@(selection == "Recipes" ? "active" : "")" id="nav-recipes"><a href="#">Recipes</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div id="profile" style="@(selection == "Profile" ? "display: inline" : "display: none")">
+            <div class="row">
+                <div class="col-md-2" style="height: 100px">
+                    @if (Model.ImageData != null)
+                    {
+                        <img src=@Url.Action("GetImage", "Account", new {userId = Model.Id}) style="width: 100%"/>
+                    }
+                </div>
+                <div class="col-md-10"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Name</label>
+                </div>
+                <div class="col-md-10">
+                    @(Model.FirstName + " " + Model.LastName)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Email</label>
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(m => m.Email)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>About Me</label>
+                </div>
+                <div class="col-md-10">
+                    @Html.DisplayFor(m => m.AboutMe)
+                </div>
+            </div>
+            @if (Model.Id == Int32.Parse(User.Identity.GetUserId()))
+            {
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Address 1</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.Address1)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Address 2</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.Address2)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>City</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.City)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>State</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.State)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Zip Code</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.ZipCode)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Country</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(m => m.Country)
+                    </div>
+                </div>
+            }
+        </div>
+        @if (Model.Id == Int32.Parse(User.Identity.GetUserId()))
+        {
+            <div id="edit-profile" style="@(selection == "EditProfile" ? "display: inline" : "display: none")">
+                @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                {
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>First Name</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Last Name</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Email, new {htmlAttributes = new {@class = "form-control"} })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>About Me</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.AboutMe, new {htmlAttributes = new {@class = "form-control", rows = "5"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Address 1</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Address1, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Address 2</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Address2, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>City</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.City, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>State</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.State, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Zip Code</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.ZipCode, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Country</label>
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(m => m.Country, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Update Profile Picture</label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <div style="position: relative;">
+                                    <a class='btn' href='javascript:;'>
+                                        Choose File...
+                                        <input type="file" name="Image" size="40" style="position: absolute; z-index: 2; top: 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                   left: 0; filter: alpha(opacity=0); opacity: 0; background-color: transparent; color: transparent;"
+                                               onchange=' $("#upload-file-info").html($(this).val()); '/>
+                                    </a>
+                                    <span class='label label-info' id="upload-file-info"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.Id)
+                    @Html.HiddenFor(m => m.UserName)
+                    @Html.HiddenFor(m => m.ImageData)
+                    @Html.HiddenFor(m => m.ImageMimeType)
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                            <input type="submit" value="Update Profile" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        <div id="recipes" style="@(selection == "Recipes" ? "display: inline" : "display: none")">
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Posted Recipes</label>
+                </div>
+                <div class="col-md-10">
+                    @if (Model.Recipes.Any())
+                    {
+                        <ul class="list-group">
+                            @foreach (var recipe in Model.Recipes)
+                            {
+                                <li class="list-group-item">
+                                    <a href=@Url.Action("Details", "Recipe", new {id = recipe.RecipeId})>@recipe.RecipeName</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        @:There are no recipes posted by this user.
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('#nav-recipes').click(function () {
+            var activeSection = $('#activeSection').val();
+            if (activeSection == "Profile") {
+                $('#nav-profile').removeClass('active');
+                $('#profile').hide();
+            }
+            if (activeSection == "EditProfile") {
+                $('#nav-edit-profile').removeClass('active');
+                $('#edit-profile').hide();
+            }
+            $('#nav-recipes').addClass('active');
+            $('#activeSection').val('Recipes');
+            $('#recipes').show();
+        });
+
+        $('#nav-profile').click(function () {
+            var activeSection = $('#activeSection').val();
+            if (activeSection == "Recipes") {
+                $('#nav-recipes').removeClass('active');
+                $('#recipes').hide();
+            }
+            if (activeSection == "EditProfile") {
+                $('#nav-edit-profile').removeClass('active');
+                $('#edit-profile').hide();
+            }
+            $('#nav-profile').addClass('active');
+            $('#activeSection').val('Profile');
+            $('#profile').show();
+        });
+
+        $('#nav-edit-profile').click(function () {
+            var activeSection = $('#activeSection').val();
+            if (activeSection == "Recipes") {
+                $('#nav-recipes').removeClass('active');
+                $('#recipes').hide();
+            }
+            if (activeSection == "Profile") {
+                $('#nav-profile').removeClass('active');
+                $('#profile').hide();
+            }
+            $('#nav-edit-profile').addClass('active');
+            $('#activeSection').val('EditProfile');
+            $('#edit-profile').show();
+        });
+    })
+</script>
