@@ -13,7 +13,7 @@ using ProjectFood.WebUI.Infrastructure;
 
 namespace ProjectFood.WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrators")]
     public class AdminController : Controller
     {
         // GET: Admin

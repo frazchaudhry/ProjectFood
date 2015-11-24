@@ -32,6 +32,7 @@ namespace ProjectFood.WebUI.Controllers
                     LastName = user.LastName,
                     AboutMe = user.AboutMe,
                     Email = user.Email,
+                    PasswordHash = user.PasswordHash,
                     Address1 = user.Address1,
                     Address2 = user.Address2,
                     City = user.City,

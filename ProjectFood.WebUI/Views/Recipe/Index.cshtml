@@ -1,4 +1,5 @@
-﻿@model List<ProjectFood.Domain.Entities.Recipe>
+﻿@using Microsoft.AspNet.Identity
+@model List<ProjectFood.Domain.Entities.Recipe>
 
 @{
     ViewBag.Title = "Recipe List";
@@ -7,7 +8,7 @@
 <h2>Recipe List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    Want to share your own Recipe? @Html.ActionLink("Post new Recipe here", "Create")
 </p>
 <hr/>
 @for (int i = 0; i < Model.Count; i++)
@@ -20,8 +21,12 @@
                     <h3>@Model[i].RecipeName</h3>
                     <p>
                         <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
-                        <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
-                        <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model[i].UserId == Int32.Parse(User.Identity.GetUserId())))
+                        {
+                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                        }
+                        @{ i += 1;}
                     </p>
                 </div>
             </div>
@@ -36,8 +41,12 @@
                         <h3>@Model[i].RecipeName</h3>
                         <p>
                             <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
-                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
-                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model[i].UserId == Int32.Parse(User.Identity.GetUserId())))
+                            {
+                                <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                                <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            }
+                            @{ i += 1;}
                         </p>
                     </div>
                 </div>
@@ -53,8 +62,12 @@
                         <h3>@Model[i].RecipeName</h3>
                         <p>
                             <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
-                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
-                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i++].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model[i].UserId == Int32.Parse(User.Identity.GetUserId())))
+                            {
+                                <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                                <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            }
+                            @{ i += 1;}
                         </p>
                     </div>
                 </div>
@@ -69,8 +82,11 @@
                         <h3>@Model[i].RecipeName</h3>
                         <p>
                             <a href=@Url.Action("Details", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-default" role="button">View</a>
-                            <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
-                            <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model[i].UserId == Int32.Parse(User.Identity.GetUserId())))
+                            {
+                                <a href=@Url.Action("Edit", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-primary" role="button">Edit</a>
+                                <a href=@Url.Action("Delete", "Recipe", new {id = Model[i].RecipeId}) class="btn btn-danger" role="button">Delete</a>
+                            }
                         </p>
                     </div>
                 </div>

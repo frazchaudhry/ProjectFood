@@ -238,6 +238,13 @@
                             {
                                 <li class="list-group-item">
                                     <a href=@Url.Action("Details", "Recipe", new {id = recipe.RecipeId})>@recipe.RecipeName</a>
+                                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model.Id == Int32.Parse(User.Identity.GetUserId())))
+                                    {
+                                        <div style="text-align: right">
+                                            @Html.ActionLink("Edit", "Edit", "Recipe", new {id = recipe.RecipeId}, new {@class = "btn btn-primary"})
+                                            @Html.ActionLink("Delete", "Delete", "Recipe", new {id = recipe.RecipeId}, new {@class = "btn btn-danger"})
+                                        </div>
+                                    }
                                 </li>
                             }
                         </ul>

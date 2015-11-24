@@ -1,17 +1,18 @@
-﻿@using ProjectFood.WebUI.Infrastructure
+﻿@using Microsoft.AspNet.Identity
+@using ProjectFood.WebUI.Infrastructure
 @model ProjectFood.Domain.Entities.Recipe
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.RecipeName;
     var ingredientCount = RecipeHelper.GetIngredientList(Model.Ingredients).Count;
     var ingredients = RecipeHelper.GetIngredientList(Model.Ingredients);
     var column = 1;
 }
 
-<h2>Details</h2>
+<h2>@Model.RecipeName</h2>
 
 <div>
-    <h4>@Model.RecipeName</h4>
+    @*<h4>@Model.RecipeName</h4>*@
     <hr/>
     <div class="row">
         <div class="col-md-4">
@@ -83,6 +84,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RecipeId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Administrators") || Model.UserId == Int32.Parse(User.Identity.GetUserId())))
+    {
+        @Html.ActionLink("Edit", "Edit", new {id = Model.RecipeId}, new {@class = "btn btn-primary"}) @:|
+    }
+    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
 </p>
