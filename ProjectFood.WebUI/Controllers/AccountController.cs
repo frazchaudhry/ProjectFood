@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using ProjectFood.Domain.Concrete;
 using ProjectFood.Domain.Entities;
 using ProjectFood.Domain.Infrastructure;
+using ProjectFood.WebUI.Infrastructure;
 using ProjectFood.WebUI.Models;
 
 namespace ProjectFood.WebUI.Controllers
@@ -83,8 +84,35 @@ namespace ProjectFood.WebUI.Controllers
                         user.ImageData = new byte[image.ContentLength];
                         image.InputStream.Read(user.ImageData, 0, image.ContentLength);
                     }
+
+                    using (var db = new EfdbContext())
+                    {
+                        userViewModel.Recipes = new List<Recipe>();
+                        userViewModel.Recipes = db.Recipes.Where(r => r.UserId == userViewModel.Id).ToList();
+                    }
+
+                    IdentityResult validationResult = await UserManager.UserValidator.ValidateAsync(user);
+                    if (validationResult.Succeeded)
+                    {
+                        IdentityResult updateResult = await UserManager.UpdateAsync(user);
+                        if (updateResult.Succeeded)
+                        {
+                            ViewBag.ActiveSection = "Profile";
+                            return View("UserProfile", userViewModel);
+                        }
+                        foreach (var error in updateResult.Errors)
+                        {
+                            ModelState.AddModelError("", error);
+                        }
+                    }
+                    foreach (var error in validationResult.Errors)
+                    {
+                        ModelState.AddModelError("", error);
+                    }
                 }
+                ModelState.AddModelError("", "There was an error accessing user data. Please try again later!");
             }
+            ViewBag.ActiveSection = "EditProfile";
             return View("UserProfile", userViewModel);
         }
 
