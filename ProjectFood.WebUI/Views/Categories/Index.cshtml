@@ -6,9 +6,12 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrators"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -20,13 +23,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.CategoryName, "Index", "Recipe", new { categoryId = item.CategoryId }, null)
+            @Html.ActionLink(item.CategoryName, "Index", "Recipe", new {categoryId = item.CategoryId}, null)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CategoryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CategoryId })
-        </td>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Administrators"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.CategoryId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.CategoryId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.CategoryId})
+            </td>
+        }
     </tr>
 }
 

@@ -5,10 +5,12 @@
 }
 
 <h2>Regions</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrators"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
 <table class="table">
     <tr>
         <th>
@@ -20,13 +22,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.RegionName, "Index", "Recipe", new { regionId = item.RegionId }, null)
+            @Html.ActionLink(item.RegionName, "Index", "Recipe", new {regionId = item.RegionId}, null)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RegionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RegionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RegionId })
-        </td>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Administrators"))
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.RegionId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.RegionId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.RegionId})
+            </td>
+        }
     </tr>
 }
 
