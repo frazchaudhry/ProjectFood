@@ -180,6 +180,10 @@
     <Compile Include="Migrations\201511220300513_nameFieldstoUserTable.Designer.cs">
       <DependentUpon>201511220300513_nameFieldstoUserTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512082018403_CommentsAddition.cs" />
+    <Compile Include="Migrations\201512082018403_CommentsAddition.Designer.cs">
+      <DependentUpon>201512082018403_CommentsAddition.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -226,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511220300513_nameFieldstoUserTable.resx">
       <DependentUpon>201511220300513_nameFieldstoUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512082018403_CommentsAddition.resx">
+      <DependentUpon>201512082018403_CommentsAddition.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

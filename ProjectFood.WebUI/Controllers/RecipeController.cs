@@ -66,6 +66,24 @@ namespace ProjectFood.WebUI.Controllers
             return View(recipe);
         }
 
+        [HttpPost]
+        public ActionResult Details(Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                var recipe = unitOfWork.RecipeRepository.GetById(comment.RecipeId);
+                if (recipe == null) return RedirectToAction("Index");
+
+                comment.CreateDateTime = DateTime.Now;
+                recipe.Comments.Add(comment);
+                unitOfWork.RecipeRepository.Update(recipe);
+                unitOfWork.Save();
+                return View(recipe);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [Authorize]
         // GET: Recipe/Create
         public ActionResult Create()

@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -18,6 +19,8 @@ namespace ProjectFood.Domain.Entities
         public string Country { get; set; }
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
+
+        public virtual List<Comment> Comments { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
         {

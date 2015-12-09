@@ -40,6 +40,7 @@ namespace ProjectFood.Domain.Concrete
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("User").Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity).HasColumnName("UserId");
+            modelBuilder.Entity<User>().HasMany(p => p.Comments).WithRequired(c => c.User).HasForeignKey(c => c.UserId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Role>().ToTable("Role").Property(p => p.Id).HasColumnName("RoleId").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<UserRole>().ToTable("UserRole");
             modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
