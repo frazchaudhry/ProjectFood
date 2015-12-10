@@ -91,7 +91,7 @@
     @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
 </p>
 
-<div style="width: 800px;margin: 0 auto;">
+<div style="width: 800px; margin: 0 auto;">
     <div class="detailBox">
         <div class="titleBox">
             <label>Comments</label>
@@ -107,7 +107,7 @@
                 {
                     <li>
                         <div class="commenterImage">
-                            <img src="@Url.Action("GetImage", "Account", new {userId = comment.UserId})" />
+                            <img src="@Url.Action("GetImage", "Account", new {userId = comment.UserId})"/>
                         </div>
                         <div class="commentText">
                             <label style="font-size: 80%">@Html.GetUserName(comment.UserId)</label>
@@ -116,7 +116,7 @@
                         </div>
                     </li>
                 }
-                <li>
+                @*<li>
                     <div class="commenterImage">
                         <img src="http://lorempixel.com/50/50/people/6"/>
                     </div>
@@ -142,20 +142,20 @@
                         <p class="">Hello this is a test comment.</p> <span class="date sub-text">on March 5th, 2014</span>
 
                     </div>
-                </li>
+                </li>*@
             </ul>
-            @using (Html.BeginForm("Details", "Recipe", FormMethod.Post, new { @class = "form-inline" }))
-            {
-                if (User.Identity.IsAuthenticated)
+            <div class="form-inline">
+                <input type="hidden" id="RecipeId" name="RecipeId" value="@Model.RecipeId" />
+                @if (User.Identity.IsAuthenticated)
                 {
                     var userId = Int32.Parse(User.Identity.GetUserId());
-                    <input type="hidden" id="RecipeId" name="RecipeId" value="@Model.RecipeId" />
-                    <input type="hidden" id="UserId" name="UserId" value="@userId" />
+                    <input type="hidden" id="UserId" name="UserId" value="@userId"/>
+                    <input type="hidden" id="connectionId" name="connectionId" value=""/>
                     <div class="form-group">
                         <textarea id="CommentText" name="CommentText" class="input-sm form-control" placeholder="Your Comments" rows="2" cols="100"></textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-default">Add</button>
+                        <button id="btnAddMessage" class="btn btn-default">Add</button>
                     </div>
                 }
                 else
@@ -165,10 +165,87 @@
                         <p class="lead">You need to be logged in to comment!</p>
                     </div>
                     <div class="form-group">
-                        @Html.ActionLink("Log In", "Login", "Account", new {returnUrl}, new { @class = "btn btn-primary"})
+                        @Html.ActionLink("Log In", "Login", "Account", new {returnUrl}, new {@class = "btn btn-primary"})
                     </div>
                 }
-            }
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+        var connection = $.hubConnection();
+        var hubProxy = connection.createHubProxy('commentsHub');
+
+        connection.start().done(function() {
+            $('#connectionId').val(connection.id);
+        });
+
+        $('#btnAddMessage').on('click', function() {
+            var comment = {
+                recipeId: $('#RecipeId').val(),
+                userId: $('#UserId').val(),
+                commentText: $('#CommentText').val()
+            }
+            $.ajax({
+                url: '/recipe/details',
+                type: 'POST',
+                data: {
+                    comment: comment
+                },
+                success: function (data) {
+                    var commentText = data.CommentText;
+                    var userId = data.UserId;
+                    var userName = data.UserName;
+                    var createDate = data.CreateDateTime;
+                    $('.commentList').append('<li>' +
+                        '<div class="commenterImage">' +
+                        '<img src="/Account/GetImage?userId=' + userId + '"/>' +
+                        '</div>' +
+                        '<div class="commentText">' +
+                        '<label style="font-size: 80%">' + userName + '</label>' +
+                        '<p class="">'+ commentText +'</p> <span class="date sub-text">on '+ createDate +'</span>' +
+                        '</div>' +
+                        '</li>');
+                    $('#CommentText').val('');
+                    connection.start().done(function () {
+                        hubProxy.invoke('BroadCastComment');
+                    });
+                },
+                error: function(e) {
+                    alert('Sorry an error occured. Please try again later!');
+                }
+            });
+        });
+
+        function refreshComments() {
+            $.ajax({
+                url: '/Recipe/GetRecipeCommentsForUser',
+                type: 'POST',
+                data: { recipeId: $('#RecipeId').val() },
+                success: function(data) {
+                    $('.commentList').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('.commentList').append('<li>' +
+                        '<div class="commenterImage">' +
+                        '<img src="/Account/GetImage?userId=' + data[i].UserId + '"/>' +
+                        '</div>' +
+                        '<div class="commentText">' +
+                        '<label style="font-size: 80%">' + data[i].UserName + '</label>' +
+                        '<p class="">' + data[i].CommentText + '</p> <span class="date sub-text">on ' + data[i].CreateDateTime + '</span>' +
+                        '</div>' +
+                        '</li>');
+                    }
+                },
+                error: function(e) {
+                    
+                }
+            });
+        }
+
+        hubProxy.on('UpdateComments', function () {
+            refreshComments();
+        });
+    })
+</script>

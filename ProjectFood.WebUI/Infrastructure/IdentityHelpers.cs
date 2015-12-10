@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -32,6 +33,13 @@ namespace ProjectFood.WebUI.Infrastructure
                 }
             }
             return new MvcHtmlString(string.Format("{0}", claimType.Split('/', '.').Last()));
+        }
+
+        public static string GetUserName(int id)
+        {
+            var user = UserManager.FindById(id);
+            if (user == null) return "";
+            return user.UserName;
         }
 
         public static AppUserManager UserManager

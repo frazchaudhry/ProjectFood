@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
@@ -39,6 +40,7 @@ namespace ProjectFood.WebUI
 
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
             app.UseGoogleAuthentication();
+            app.MapSignalR("/signalr", new HubConfiguration());
         }
     }
 }

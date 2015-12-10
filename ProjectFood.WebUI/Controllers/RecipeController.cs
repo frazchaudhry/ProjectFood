@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ProjectFood.Domain.Abstract;
 using ProjectFood.Domain.Entities;
+using ProjectFood.WebUI.Hubs;
 using ProjectFood.WebUI.Infrastructure;
+using ProjectFood.WebUI.Models;
 
 namespace ProjectFood.WebUI.Controllers
 {
@@ -67,7 +76,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details(Comment comment)
+        public async Task<ActionResult> Details(Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -78,13 +87,21 @@ namespace ProjectFood.WebUI.Controllers
                 recipe.Comments.Add(comment);
                 unitOfWork.RecipeRepository.Update(recipe);
                 unitOfWork.Save();
-                return View(recipe);
+                var user = await IdentityHelpers.UserManager.FindByIdAsync(comment.UserId);
+                var jsonComment = new CommentJsonViewModel
+                {
+                    UserId = comment.UserId,
+                    UserName = user.UserName,
+                    CommentText = comment.CommentText,
+                    CreateDateTime = String.Format("{0:r}", comment.CreateDateTime),
+                };
+                return Json(jsonComment);
             }
 
             return RedirectToAction("Index");
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         // GET: Recipe/Create
         public ActionResult Create()
         {
@@ -96,7 +113,7 @@ namespace ProjectFood.WebUI.Controllers
         // POST: Recipe/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Recipe recipe, HttpPostedFileBase image = null)
@@ -126,7 +143,7 @@ namespace ProjectFood.WebUI.Controllers
         }
 
         // GET: Recipe/Edit/5
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -200,6 +217,21 @@ namespace ProjectFood.WebUI.Controllers
             if (recipe != null)
             {
                 return File(recipe.ImageData, recipe.ImageMimeType);
+            }
+            return null;
+        }
+
+        public JsonResult GetRecipeCommentsForUser(int recipeId)
+        {
+            var recipe = unitOfWork.RecipeRepository.GetById(recipeId);
+            if (recipe != null)
+            {
+                var comments = recipe.Comments;
+                var commentsJson = comments.Select(comment => new CommentJsonViewModel
+                {
+                    UserId = comment.UserId, UserName = IdentityHelpers.GetUserName(comment.UserId), CommentText = comment.CommentText, CreateDateTime = String.Format("{0:r}", comment.CreateDateTime)
+                }).ToList();
+                return Json(commentsJson);
             }
             return null;
         }
